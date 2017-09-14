@@ -1,3 +1,5 @@
+
+
 <%= form_with(model: user, local: true) do |form| %>
   <% if user.errors.any? %>
     <div id="error_explanation">
@@ -19,6 +21,11 @@
   <div class="field">
     <%= form.label :email %>
     <%= form.text_field :email, id: :user_email %>
+  </div>
+
+  <div class="field">
+    <%= form.label :password %><br />
+    <%= form.password_field :password %>
   </div>
 
   <div class="actions">
