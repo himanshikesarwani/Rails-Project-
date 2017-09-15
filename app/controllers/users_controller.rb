@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :require_same_user, only:[:edit, :update]
+  before_action :require_admin, only:[:destroy]
   # GET /users
   # GET /users.json
   def index
@@ -70,9 +71,16 @@ class UsersController < ApplicationController
     end
     
     def require_same_user
-      if current_user != @user
+      if current_user != @user and !current_user.admin?
         flash[:danger] = "You can edit your account only"
         redirect_to root_path
       end
+    end
+    
+    def require_admin
+      if logged_in? and !current_user.admin?
+        flash[:danger] = "Only admin can perform"
+        redirect_to root_path
+      end 
     end
 end
